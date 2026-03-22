@@ -31,7 +31,7 @@ public class JobRestController {
 
         return service.getJob(jobPost.getPostId()); // 저장된 데이터 다시 조회해서 반환
     }
- 
+
     @PutMapping("jobPost") // PUT 요청 → 데이터 수정
     public JobPost updateJob(@RequestBody JobPost jobPost) {
         service.updateJob(jobPost); // 서비스에 수정 요청
@@ -42,5 +42,16 @@ public class JobRestController {
     public String deleteJob(@PathVariable int postId) {
         service.deleteJob(postId); // 삭제 요청
         return "Deleted"; // 결과 반환
+    }
+
+    @GetMapping("jobPosts/keyword/{keyword}") // URL로 keyword를 받아서 서비스 계층에 검색 요청
+    public List<JobPost> searchByKeyword(@PathVariable("keyword") String keyword) {
+        return service.search(keyword);
+    }
+
+    @GetMapping("load") // 초기 데이터(DB에 샘플 데이터) 넣는 API
+    public String loadData() {
+        service.load();
+        return "success";
     }
 }
