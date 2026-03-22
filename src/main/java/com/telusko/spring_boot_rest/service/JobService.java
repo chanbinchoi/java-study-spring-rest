@@ -1,23 +1,35 @@
 package com.telusko.spring_boot_rest.service;
 
-import com.telusko.JobApp.model.JobPost;
-import com.telusko.JobApp.repo.JobRepo;
+import com.telusko.spring_boot_rest.model.JobPost;
+import com.telusko.spring_boot_rest.repo.JobRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service // Service 계층으로 등록 (비즈니스 로직 담당)
+@Service // 비즈니스 로직 처리 계층
 public class JobService {
 
-    @Autowired // Spring이 JobRepo 객체를 자동으로 넣어줌 - 의존성 주입(DI, Dependency Injection)
-    private JobRepo repo; // 데이터 저장/조회 담당 Repository 주입
+    @Autowired // Repository 객체 자동 주입
+    private JobRepo repo;
 
     public void addJob(JobPost jobPost) {
-        repo.addJob(jobPost); // 채용 공고를 저장소에 추가
+        repo.addJob(jobPost); // 데이터 저장
     }
 
     public List<JobPost> getAllJobs() {
-        return repo.getAllJobs(); // 전체 채용 공고 목록 반환
+        return repo.getAllJobs(); // 전체 데이터 조회
+    }
+
+    public JobPost getJob(int postId) {
+        return repo.getJob(postId); // 특정 데이터 조회
+    }
+
+    public void updateJob(JobPost jobPost) {
+        repo.updateJob(jobPost); // Repository에 수정 요청 전달
+    }
+
+    public void deleteJob(int postId) {
+        repo.deleteJob(postId); // Repository에 삭제 요청 전달
     }
 }

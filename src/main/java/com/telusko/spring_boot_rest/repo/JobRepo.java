@@ -1,6 +1,6 @@
 package com.telusko.spring_boot_rest.repo;
 
-import com.telusko.JobApp.model.JobPost;
+import com.telusko.spring_boot_rest.model.JobPost;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -38,5 +38,34 @@ public class JobRepo {
     public void addJob(JobPost job) {
         jobs.add(job); // 리스트에 추가
         System.out.println(jobs); // 콘솔 출력 (디버깅용)
+    }
+
+    public JobPost getJob(int postId) {
+
+        for (JobPost job : jobs) { // jobs 리스트를 하나씩 순회
+            if (job.getPostId() == postId) // ID가 일치하면
+                return job; // 해당 데이터 반환
+        }
+
+        return null; // 못 찾으면 null 반환
+    }
+
+    public void updateJob(JobPost jobPost) {
+        for (JobPost jobPost1 : jobs) { // 리스트 전체 탐색
+            if (jobPost1.getPostId() == jobPost.getPostId()) { // 같은 ID 찾기
+
+                jobPost1.setPostProfile(jobPost.getPostProfile()); // 프로필 수정
+                jobPost1.setPostDesc(jobPost.getPostDesc()); // 설명 수정
+                jobPost1.setReqExperience(jobPost.getReqExperience()); // 경력 수정
+                jobPost1.setPostTechStack(jobPost.getPostTechStack()); // 기술스택 수정
+            }
+        }
+    }
+
+    public void deleteJob(int postId) {
+        for (JobPost jobPost : jobs) { // 리스트 순회
+            if (jobPost.getPostId() == postId) // ID 일치 확인
+                jobs.remove(jobPost); // 해당 데이터 삭제
+        }
     }
 }
